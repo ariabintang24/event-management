@@ -13,7 +13,10 @@ class Event extends Model
         'location',
         'price',
         'quota',
+        'image',
     ];
+
+    protected $appends = ['image_url'];
 
     public function images()
     {
@@ -28,5 +31,12 @@ class Event extends Model
     public function bookmarkedBy()
     {
         return $this->belongsToMany(User::class, 'bookmarks');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image
+            ? asset('storage/' . $this->image)
+            : null;
     }
 }

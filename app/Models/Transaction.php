@@ -9,6 +9,7 @@ class Transaction extends Model
     protected $fillable = [
         'user_id',
         'order_id',
+        'event_id',
         'amount',
         'status',
     ];
@@ -21,5 +22,10 @@ class Transaction extends Model
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 }
