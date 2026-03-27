@@ -21,22 +21,31 @@ class TransactionController extends Controller
         $this->ticketService = $ticketService;
     }
 
-    public function checkout(Request $request)
+    public function myTransactions(Request $request)
     {
-        $user = $request->user();
+        $transactions = \App\Models\Transaction::with('event')
+            ->latest()
+            ->get();
 
-        $transaction = $this->transactionService->create($user, $request->event_id);
-
-        // sementara anggap langsung paid (dummy)
-        $this->transactionService->markAsPaid($transaction);
-
-        $event = Event::findOrFail($request->event_id);
-
-        $ticket = $this->ticketService->generate($user, $event, $transaction);
-
-        return response()->json([
-            'transaction' => $transaction,
-            'ticket' => $ticket
-        ]);
+        return response()->json($transactions);
     }
+
+    // public function checkout(Request $request)
+    // {
+    //     $user = $request->user();
+
+    //     $transaction = $this->transactionService->create($user, $request->event_id);
+
+    //     // sementara anggap langsung paid (dummy)
+    //     $this->transactionService->markAsPaid($transaction);
+
+    //     $event = Event::findOrFail($request->event_id);
+
+    //     $ticket = $this->ticketService->generate($user, $event, $transaction);
+
+    //     return response()->json([
+    //         'transaction' => $transaction,
+    //         'ticket' => $ticket
+    //     ]);
+    // }
 }

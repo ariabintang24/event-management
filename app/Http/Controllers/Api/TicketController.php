@@ -27,4 +27,12 @@ class TicketController extends Controller
             $service->handle($request->code)
         );
     }
+
+    public function myTickets(Request $request)
+    {
+        // sementara ambil semua (dummy)
+        $tickets = \App\Models\Ticket::with('event')->latest()->get();
+
+        return response()->json($tickets);
+    }
 }
