@@ -6,7 +6,7 @@ function Profile() {
     const [tickets, setTickets] = useState([]);
 
     useEffect(() => {
-        api.get("/tickets")
+        api.get("/my-tickets")
             .then((res) => setTickets(res.data))
             .catch((err) => console.error(err));
     }, []);
