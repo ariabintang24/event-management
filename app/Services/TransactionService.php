@@ -8,13 +8,14 @@ use Illuminate\Support\Str;
 
 class TransactionService
 {
-    public function create($user, $eventId)
+    public function create($user, $eventId, $orderId)
     {
         $event = Event::findOrFail($eventId);
 
         return Transaction::create([
-            'user_id' => $user->id,
-            'order_id' => 'ORD-' . Str::uuid(),
+            'user_id' => $user ? $user->id : 1,
+            'event_id' => $event->id,
+            'order_id' => $orderId,
             'amount' => $event->price,
             'status' => 'pending',
         ]);
