@@ -73,8 +73,12 @@ class CheckoutController extends Controller
 
             $snapToken = Snap::getSnapToken($params);
 
+            $transaction->snap_token = $snapToken;
+            $transaction->save();
+
             return response()->json([
-                'token' => $snapToken
+                'token' => $snapToken,
+                'transaction' => $transaction
             ]);
         } catch (\Exception $e) {
             return response()->json([
