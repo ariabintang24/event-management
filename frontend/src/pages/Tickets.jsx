@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import QRcode from "react-qr-code";
 
 function Tickets() {
     const [tickets, setTickets] = useState([]);
@@ -45,13 +46,13 @@ function Tickets() {
                             <span
                                 className={`text-xs px-3 py-1 rounded-full mt-2 inline-block
                                 ${
-                                    ticket.status === "paid"
+                                    ticket.status === "unused"
                                         ? "bg-green-100 text-green-600"
-                                        : "bg-yellow-100 text-yellow-600"
+                                        : "bg-gray-100 text-gray-500"
                                 }
                             `}
                             >
-                                {ticket.status}
+                                {ticket.status === "unused" ? "Valid" : "Used"}
                             </span>
                         </div>
                     </div>
